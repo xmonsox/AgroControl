@@ -121,6 +121,12 @@
                 <p>USUARIOS</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="<?= base_url('superadmin/Dashboard/Proveedores') ?>" class="nav-link">
+                <i class="fa-solid fa-users"></i>
+                <p>PROVEEDORES</p>
+              </a>
+            </li>
 
             <li class="nav-item mt-5 bg-danger">
               <a href="<?= base_url('Start/cerrarSession') ?>" class="nav-link">

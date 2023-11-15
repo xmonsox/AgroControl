@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller {
 	public function __construct(){
         parent::__construct();
 		$this->load->database();
+		$this->load->model('ProveedoresModel');
 		$this->load->model('UsuariosModel');
 
         $validacion = $this->session->has_userdata("session_actual");
@@ -29,12 +30,17 @@ class Dashboard extends CI_Controller {
 		$this->load->view('Dashboard/superadmin/plantilla', $data);
 	}
 
-
 	public function Usuarios(){
 		$data['Usuarios'] = $this->UsuariosModel->findAll();
 
 		$data['session'] = $this->session->userdata("session_actual");
 		$this->load->view('Dashboard/superadmin/usuarios', $data);
+	}
+	public function Proveedores(){
+		$data['Proveedores'] = $this->ProveedoresModel->findAll();
+
+		$data['session'] = $this->session->userdata("session_actual");
+		$this->load->view('Dashboard/superadmin/proveedores', $data);
 	}
 
 

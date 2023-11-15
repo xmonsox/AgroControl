@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UsuariosModel extends CI_Model{
+class ProveedoresModel extends CI_Model{
 
-    public $table = 'usuarios';
-    public $table_id = 'id_usuario';
+    public $table = 'proveedores';
+    public $table_id = 'id_proveedor';
 
     public function __construct(){
         $this->load->database();
@@ -63,7 +63,7 @@ class UsuariosModel extends CI_Model{
     {
         $this->db->select('*');
         $this->db->where("email", $email);
-        $registros = $this->db->get('usuarios')->result();
+        $registros = $this->db->get('proveedores')->result();
 
         return (sizeof($registros) == 0);
     }
@@ -82,26 +82,21 @@ class UsuariosModel extends CI_Model{
     {
         $this->db->select('*');
         $this->db->where("email", $email);
-        $this->db->where("id_usuario != ", $id);
-        $registros = $this->db->get('usuarios')->result();
+        $this->db->where("id_proveedor != ", $id);
+        $registros = $this->db->get('proveedores')->result();
 
         return (sizeof($registros) == 0);
     }
 
-    public function insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password){
+    public function insertar($id_proveedor, $nombre, $telefono, $direccion, $email){
         $data = [
-            'id_usuario' => $id_usuario,
-            'documento' => $cedula,
+            'id_proveedor' => $id_proveedor,
             'nombre' => $nombre,
-            'apellido' => $apellido,
             'telefono' => $telefono,
             'direccion' => $direccion,
             'email' => $email,
-            'rol' => $rol,
-            'estado' => $estado,
-            'passw' => md5($password),
         ];
-        return $this->db->insert('usuarios', $data);
+        return $this->db->insert('proveedores', $data);
     }
 
     function findAll(){
@@ -111,9 +106,9 @@ class UsuariosModel extends CI_Model{
         return $query->result();
     }
 
-    public function findById($id_usuario) {
-        $this->db->where('id_usuario', $id_usuario);
-        $query = $this->db->get('usuarios');
+    public function findById($id_proveedor) {
+        $this->db->where('id_proveedor', $id_proveedor);
+        $query = $this->db->get('proveedores');
 
         if ($query->num_rows() > 0) {
             return $query->row();
@@ -122,20 +117,16 @@ class UsuariosModel extends CI_Model{
         }
     }
 
-    public function actualizarUsuario($id, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $tipo, $estado) {
+    public function actualizarProveedor($id_proveedor, $nombre, $telefono, $direccion, $email) {
         $data = array(
-            'documento' => $cedula,
             'nombre' => $nombre,
-            'apellido' => $apellido,
             'telefono' => $telefono,
             'direccion' => $direccion,
-            'rol' => $tipo,
-            'estado' => $estado,
             'email' => $email,
         );
 
-        $this->db->where('id_usuario', $id);
-        $this->db->update('usuarios', $data);
+        $this->db->where('id_proveedor', $id_proveedor);
+        $this->db->update('proveedores', $data);
     }
 
     public function actualizarPerfil($id, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $tipo, $estado) {
@@ -165,8 +156,8 @@ class UsuariosModel extends CI_Model{
         }
     }
 
-    function delete($id_usuario){
-        $this->db->where($this->table_id, $id_usuario);
+    function delete($id_proveedor){
+        $this->db->where($this->table_id, $id_proveedor);
         $this->db->delete($this->table);
     }
 

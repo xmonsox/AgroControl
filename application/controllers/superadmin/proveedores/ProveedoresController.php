@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class UsersController extends CI_Controller {
+class ProveedoresController extends CI_Controller {
 	public function __construct(){
         parent::__construct();
 		$this->load->database();
-		$this->load->model('UsuariosModel');
+		$this->load->model('ProveedoresModel');
 
         $validacion = $this->session->has_userdata("session_actual");
 		
@@ -22,42 +22,37 @@ class UsersController extends CI_Controller {
             die();
         }
     }
-    public function CrearUsuario(){
+    public function CrearProveedor(){
 
 		$caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$longitud = 10;
-		$id_usuario = '';
+		$id_proveedor = '';
 		for ($i = 0; $i < $longitud; $i++) {
 			$indice_aleatorio = rand(0, strlen($caracteres_permitidos) - 1);
 			$caracter_aleatorio = $caracteres_permitidos[$indice_aleatorio];
-			$id_usuario .= $caracter_aleatorio;
+			$id_proveedor .= $caracter_aleatorio;
 		}
 		if($this->input->server("REQUEST_METHOD")=="POST"){
-			$cedula = $this->input->post("documento");
             $nombre = $this->input->post("nombres");
-            $apellido = $this->input->post("apellidos");
             $telefono = $this->input->post("telefono");
             $direccion = $this->input->post("direccion");
 			$email = $this->input->post("email");
-			$password = $this->input->post("password");
-			$rol = $this->input->post("rol");
-			$estado = $this->input->post("estado");
 			
-            if($id_usuario && $cedula && $nombre && $apellido && $telefono && $direccion && $email && $password && $rol && $estado != ""){
+            if($telefono && $direccion && $email != ""){
                 
-				$cedulaValida = $this->UsuariosModel->validarCedula($cedula);
-				$userValido = $this->UsuariosModel->validarEmail($email);
+				//$cedulaValida = $this->UsuariosModel->validarCedula($cedula);
+				$proveedorValido = $this->ProveedoresModel->validarEmail($email);
 
-				if($cedulaValida && $userValido){
-					$this->UsuariosModel->insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password);
+				if($proveedorValido){
+					$this->ProveedoresModel->insertar($id_proveedor, $nombre, $telefono, $direccion, $email);
 					
-					$data['Usuarios'] = $this->UsuariosModel->findAll();
+					$data['Proveedores'] = $this->ProveedoresModel->findAll();
 					$data['session'] = $this->session->userdata("session_actual");
-					$data['usuarioinsertado']=true;
-					$this->load->view('Dashboard/superadmin/usuarios', $data);
+					$data['proveedorinsertado']=true;
+					$this->load->view('Dashboard/superadmin/proveedores', $data);
 					
 				}else{
-					redirect('superadmin/Dashboard/RegistrarUsuario', 'refresh');
+					redirect('superadmin/Dashboard/Proveedores', 'refresh');
 				}
             }else{
 				redirect('superadmin/Dashboard/RegistrarUsuario', 'refresh');
@@ -66,41 +61,37 @@ class UsersController extends CI_Controller {
 	}
 
 
-	public function EditarUsuario($id_usuario=null) {
-        $id_usuario = $id_usuario;
+	public function EditarProveedor($id_proveedor=null) {
+        $id_proveedor = $id_proveedor;
 		$data['session'] = $this->session->userdata("session_actual");
 
-        $DatosUsuario = $this->UsuariosModel->findByid($id_usuario);
-        $data['usuario'] = $DatosUsuario;
-		$this->load->view('Dashboard/superadmin/Editar', $data);
+        $DatosProveedor = $this->ProveedoresModel->findByid($id_proveedor);
+        $data['proveedor'] = $DatosProveedor;
+		$this->load->view('Dashboard/superadmin/EditarProveedor', $data);
 
     }
 
-    public function ActualizarDatosUsuario() {
-        $id = $this->input->post('id');
-        $cedula = $this->input->post('cedula');
+    public function ActualizarDatosProveedor() {
+        $id_proveedor = $this->input->post('id_proveedor');
         $nombre = $this->input->post('nombre');
-        $apellido = $this->input->post('apellido');
         $telefono = $this->input->post('telefono');
         $direccion = $this->input->post('direccion');
         $email = $this->input->post('email');
-        $rol = $this->input->post('rol');
-        $estado = $this->input->post('estado');
 
-		if($cedula && $nombre && $apellido && $telefono && $direccion && $email && $rol && $estado != ""){
+		if($id_proveedor && $nombre && $telefono && $direccion && $email != ""){
                 
-			$cedulaValida = $this->UsuariosModel->ReValidarCedula($cedula, $id);
-			$userValido = $this->UsuariosModel->ReValidarEmail($email, $id);
+			
+			$proveedorValido = $this->ProveedoresModel->ReValidarEmail($email, $id_proveedor);
 
-			if($cedulaValida && $userValido){
-				$this->UsuariosModel->actualizarUsuario($id, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado);
-				redirect('superadmin/Dashboard/Usuarios', 'refresh');
+			if($proveedorValido){
+				$this->ProveedoresModel->actualizarProveedor($id_proveedor, $nombre, $telefono, $direccion, $email);
+				redirect('superadmin/Dashboard/Proveedores', 'refresh');
 				
 			}else{
-				redirect('superadmin/Dashboard/EditarUsuario', 'refresh');
+				redirect('superadmin/Dashboard/EditarProveedor', 'refresh');
 			}
 		}else{
-			redirect('superadmin/Dashboard/EditarUsuario', 'refresh');
+			redirect('superadmin/Dashboard/EditarProveedor', 'refresh');
 		}
 	}
 
@@ -158,8 +149,8 @@ class UsersController extends CI_Controller {
 
 	}
 
-	public function deleteUsuario($id_usuario){
-        $this->UsuariosModel->delete($id_usuario);
-		redirect('superadmin/Dashboard/Usuarios', 'refresh');
+	public function deleteProveedores($id_proveedor){
+        $this->ProveedoresModel->delete($id_proveedor);
+		redirect('superadmin/Dashboard/Proveedores', 'refresh');
     }
 }
