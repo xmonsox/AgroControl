@@ -86,7 +86,7 @@
                             <div class="row p-3">
                                 <div class="col-md-6">
                                     <select class="form-select" id="id_proveedor" name="id_proveedor">
-                                        <option value="..." selected style="color: gray;">PROVEEDOR</option>
+                                        <option value="" selected style="color: gray;">PROVEEDOR</option>
                                         <?php foreach ($proveedores as $proveedor): ?>
                                             <option value="<?=$proveedor->id_proveedor?>"><?=$proveedor->nombre?></option>
                                         <?php endforeach; ?>

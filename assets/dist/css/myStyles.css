@@ -10,3 +10,35 @@
 .contenedor {
   width: 500px;
 }
+
+
+.ProfilePic {
+  position: relative;
+  overflow: hidden;
+}
+
+.imagePic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(0, 0, 0);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.ProfilePic:hover .imagePic {
+  opacity: 0.9;
+}
+
+.ProfilePic:hover .overlay {
+  opacity: 1;
+} 

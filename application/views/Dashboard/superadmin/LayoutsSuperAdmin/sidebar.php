@@ -1,13 +1,13 @@
 <aside class="main-sidebar sidebar-dark-light elevation-4">
     <a href="<?=base_url('superadmin/Dashboard/Inicio')?>" class="brand-link">
-      <img src="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="http://localhost/AgroControl/assets/dist/img/LogotipoAgroControl_085246.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AgroControl</span>
     </a>
 
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="http://localhost/AgroControl/assets/dist/img/users/UserIMG.png" class="img-circle elevation-2" alt="User Image">
+          <img src="http://localhost/AgroControl/Uploads/<?=$session['imguser']?>" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
             <a href="<?=base_url('superadmin/Dashboard/MiPerfil')?>" class="d-block"><?= explode(" ", $session['nombre'])[0]." ".explode(" ", $session['apellido'])[0] ?></a>
@@ -72,7 +72,7 @@
           <li class="nav-item bg-orange">
             <a href="<?=base_url('Start/cerrarSession')?>" class="nav-link">
               <i class="fa-solid fa-right-from-bracket"></i>
-              <p>CERRAR SESSION</p>
+              <p>CERRAR SESION</p>
             </a>
           </li>
         </ul>

@@ -7,6 +7,93 @@
     
     $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
   ?>
+
+    <?php
+      if (isset($passwordActualizada)) {
+        ?>
+          <script>
+            Swal.fire({
+              title: "CONTRASEÑA ACTUALIZADA",
+              text: "La Contraseña se actualizo correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }elseif(isset($NewPasswordNoCoincide)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "NO SE ACTUALIZO",
+              text: "La nueva contraseña no coincide con la confirmacion",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($camposvacios)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ERROR EN DATOS",
+              text: "Los campos estan vacios",
+              icon: "error"
+            });
+          </script>
+        <?php
+      }elseif(isset($passwordincorrecta)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "CONTRASEÑA INCORRECTA",
+              text: "La contraseña ingresada es incorrecta",
+              icon: "error"
+            });
+          </script>
+        <?php
+      }elseif(isset($perfilactualizado)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION CORRECTA",
+              text: "Tus datos personales se actualizaron correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }elseif(isset($datosrepetidos)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION INCORRECTA",
+              text: "Datos ingresados ya existen en el sistema, intente nuevamente",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($formatoincorrecto)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION INCORRECTA",
+              text: "El archivo ingresado no es valido, intente de nuevo",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($ImgProfileActualizada)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION CORRECTA",
+              text: "La Imagen se actualizo correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }
+    ?>
   
   <div class="content-wrapper">
     <section class="content-header">
@@ -21,8 +108,18 @@
 
             <div class="card card-orange card-outline">
               <div class="card-body box-profile">
-                <div class="text-center">
-                  <img class="img-fluid img-circle" src="http://localhost/AgroControl/assets/dist/img/users/UserIMG.png" alt="User profile picture">
+                <div class="text-center ProfilePic">
+                  <button class="btn" data-bs-toggle="modal" data-bs-target="#EditUserImg">
+                    <img class="img-fluid img-circle imagePic" src="http://localhost/AgroControl/Uploads/<?=$session['imguser']?>" alt="User profile picture">
+                    <div class="overlay d-flex justify-content-center">
+                      <div class="container py-2">
+                        <div class="text-center">
+                          <i class="fa-solid fa-camera fa-3x mb-2"></i>
+                          <p class="mb-0">ACTUALIZAR FOTO DE PERFIL</p>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
                 </div>
 
                 <h3 class="profile-username text-center"><?=$session['nombre']?> <?=$session['apellido']?></h3>
@@ -171,6 +268,26 @@
         </div>
       </form>
 
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EditUserImg" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">ACTUALIZAR FOTO DE PERFIL</h1>
+      </div>
+      <form action="<?=base_url('superadmin/usuarios/UsersController/cargar_imagen')?>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <input type="hidden" value="<?=$session['id_usuario']?>" name="id_usuario">
+          <input class="form-control" type="file" name="upload"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CERRAR</button>
+          <button type="submit" class="btn btn-outline-success">ACTUALIZAR</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

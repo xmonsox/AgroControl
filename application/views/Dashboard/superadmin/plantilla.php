@@ -12,7 +12,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>Inicio Dashboard</h1>
+							
 						</div>
 					</div>
 				</div>
@@ -29,7 +29,7 @@
 							<p>Provedores Registrados</p>
 						</div>
 						<div class="icon">
-							<i class="ion ion-bag"></i>
+							<i class="ion ion-ios-box"></i>
 						</div>
 						<a href="<?=base_url('superadmin/Dashboard/Proveedores')?>" class="small-box-footer">Proveedores <i class="fas fa-arrow-circle-right"></i></a>
 						</div>
@@ -44,7 +44,7 @@
 							<p>Actividades Registradas</p>
 						</div>
 						<div class="icon">
-							<i class="ion ion-stats-bars"></i>
+							<i class="ion ion-android-checkmark-circle"></i>
 						</div>
 							<a href="<?=base_url('superadmin/Dashboard/Actividades')?>" class="small-box-footer">Actividades <i class="fas fa-arrow-circle-right"></i></a>
 						</div>
@@ -58,7 +58,7 @@
 							<p>Empleados Registrados</p>
 						</div>
 						<div class="icon">
-							<i class="ion ion-person-add"></i>
+							<i class="ion ion-android-people"></i>
 						</div>
 						<a href="<?=base_url('superadmin/Dashboard/Usuarios')?>" class="small-box-footer">Usuarios <i class="fas fa-arrow-circle-right"></i></a>
 						</div>
@@ -72,7 +72,7 @@
 							<p>Maquinaria Registrada</p>
 						</div>
 						<div class="icon">
-							<i class="ion ion-pie-graph"></i>
+							<i class="ion ion-android-train"></i>
 						</div>
 						<a href="<?=base_url('superadmin/Dashboard/Maquinaria')?>" class="small-box-footer">Maquinaria <i class="fas fa-arrow-circle-right"></i></a>
 						</div>
@@ -145,7 +145,7 @@
 							nosotros!</p>
 					</div>
 					<div class="card-footer">
-						ADMINISTRADOR
+						SUPERADMIN
 					</div>
 				</div>
 			</section>
