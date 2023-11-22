@@ -3,32 +3,32 @@
 ?>
   <?php
     $dataSidebar['session']=$session;
-    $dataSidebar['OptionSelected']='usuarios';
+    $dataSidebar['OptionSelected']='maquinaria';
     
     $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
   ?>
     <?php
-      if (isset($usuarioinsertado)) {
+      if (isset($maquinariainsertada)) {
         ?>
           <script>
             Swal.fire({
               title: "REGISTRO EXITOSO",
-              text: "El usuario se ha registrado correctamente",
+              text: "La maquinaria se ha registrado correctamente",
               icon: "success"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Maquinaria')?>">
         <?php
       }elseif(isset($datorepetido)){
         ?>
           <script>
             Swal.fire({
               title: "REGISTRO FALLIDO",
-              text: "Datos ingresados del usuario ya existen",
+              text: "Datos ingresados de la maquinaria ya existen",
               icon: "error"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Maquinaria')?>">
         <?php
       }elseif(isset($camposvacios)){
         ?>
@@ -39,18 +39,18 @@
               icon: "warning"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Maquinaria')?>">
         <?php
-      }elseif(isset($usuarioactualizado)){
+      }elseif(isset($maquinariactualizada)){
         ?>
           <script>
             Swal.fire({
               title: "ACTUALIZACION EXITOSA",
-              text: "El usuario fue actualizado exitosamente",
+              text: "La maquinaria fue actualizada exitosamente",
               icon: "success"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Maquinaria')?>">
         <?php
       }
     ?>
@@ -65,24 +65,21 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-
               <div class="card">
-
                 <div class="card-body">
                   <div class="d-flex justify-content-start py-2">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-user-plus"></i> REGISTRAR USUARIO</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-tractor"></i> REGISTRAR MAQUINARIA</button>
                   </div>
                   <table id="example1" class="table table-bordered table-hover">
                     <thead>
                       <tr class="bg-dark">
                         <th>ID</th>
-                        <th>CEDULA</th>
-                        <th>NOMBRES</th>
-                        <th>APELLIDOS</th>
-                        <th>TELEFONO</th>
-                        <th>DIRECCION</th>
-                        <th>ROL</th>
-                        <th>EMAIL</th>
+                        <th>SERIE</th>
+                        <th>NOMBRE</th>
+                        <th>FABRICANTE</th>
+                        <th>ADQUISICION</th>
+                        <th>COSTO</th>
+                        <th>TIPO</th>
                         <th>ESTADO</th>
                         <th>EDITAR</th>
                         <th>ELIMINAR</th>
@@ -90,34 +87,41 @@
                     </thead>
 
                     <tbody>
-                      <?php foreach ($Usuarios as $usuario): ?>
+                      <?php foreach ($maquinas as $maquinaria): ?>
                         <tr>
-                          <td><?= $usuario->id_usuario ?></td>
-                          <td><?= $usuario->documento ?></td>
-                          <td><?= $usuario->nombre ?></td>
-                          <td><?= $usuario->apellido ?></td>
-                          <td><?= $usuario->telefono ?></td>
-                          <td><?= $usuario->direccion ?></td>
-                          <td><?= $usuario->rol ?></td>
-                          <td><?= $usuario->email ?></td>
+                          <td><?= $maquinaria->id_maquinaria ?></td>
+                          <td><?= $maquinaria->num_serie?></td>
+                          <td><?= $maquinaria->nombre ?></td>
+                          <td><?= $maquinaria->fabricante ?></td>
+                          <td><?= $maquinaria->fecha_adquisicion ?></td>
+                          <td><?= $maquinaria->costo_adquisicion ?></td>
+                          <td><?= $maquinaria->tipo_maquinaria ?></td>
                           <?php
-                          if ($usuario->estado == "ACTIVO") {
+                          if ($maquinaria->estado == "ACTIVA") {
                             ?>
-                              <td class="table-success"><?= $usuario->estado ?></td>
+                              <td class="table-success"><?= $maquinaria->estado ?></td>
                             <?php
-                          } elseif ($usuario->estado == "INACTIVO") {
+                          } elseif ($maquinaria->estado == "INACTIVA") {
                             ?>
-                              <td class="table-danger"><?= $usuario->estado ?></td>
+                              <td class="table-danger"><?= $maquinaria->estado ?></td>
+                            <?php
+                          }elseif ($maquinaria->estado == "SUSPENDIDA") {
+                            ?>
+                              <td class="table-light"><?= $maquinaria->estado ?></td>
+                            <?php
+                          }elseif ($maquinaria->estado == "MANTENIMIENTO") {
+                            ?>
+                              <td class="table-primary"><?= $maquinaria->estado ?></td>
                             <?php
                           }
                           ?>
                           <td class="text-center">
-                            <a class="btn btn-outline-primary" title="EDITAR" href="<?=base_url('superadmin/usuarios/UsersController/EditarUsuario/'.$usuario->id_usuario)?>"><i class="fa-solid fa-user-pen"></i></a>
+                            <a class="btn btn-outline-primary" title="EDITAR" href="<?=base_url('superadmin/maquinaria/MaquinariaController/EditarMaquinaria/'.$maquinaria->id_maquinaria)?>"><i class="fa-solid fa-user-pen"></i></a>
                           </td>
                           <td class="text-center">
                             <button class="btn btn-outline-danger" title="ELIMINAR"  
                               onclick="Swal.fire({
-                                      title: '¿Deseas eliminar este usuario?',
+                                      title: '¿Deseas eliminar esta maquinaria?',
                                       text: 'No podras revertir este cambio!',
                                       icon: 'warning',
                                       confirmButtonColor: '#3085d6',
@@ -126,7 +130,7 @@
                                       denyButtonText: 'NO ELIMINAR',
                                     }).then((result) => {                                                                                    
                                       if (result.isConfirmed) {
-                                        window.location.href='<?=base_url('superadmin/usuarios/UsersController/deleteUsuario/'.$usuario->id_usuario)?>';
+                                        window.location.href='<?=base_url('superadmin/maquinaria/MaquinariaController/deleteMaquinaria/'.$maquinaria->id_maquinaria)?>';
                                         Swal.fire('Eliminado Correctamente!', '', 'success');
                                       } else if (result.isDenied) {
                                         Swal.fire('No Se Realizaron Cambios', '', 'info');
@@ -156,83 +160,68 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-user-plus"></i> REGISTRAR USUARIOS</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-tractor"></i> REGISTRAR MAQUINARIA</h1>
         </div>
-        <form action="<?= base_url('superadmin/usuarios/UsersController/CrearUsuario') ?>" method="POST">
+        <form action="<?=base_url('superadmin/maquinaria/MaquinariaController/RegistrarMaquinaria') ?>" method="POST">
           <div class="modal-body">
             <div class="input-group mb-3">
-              <input type="number" class="form-control" name="documento" required placeholder="NUMERO DE DOCUMENTO">
+              <input type="text" class="form-control" name="num_serie" required placeholder="NUMERO DE SERIE">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <i class="fa-solid fa-address-card"></i>
+                    <i class="fa-solid fa-hashtag"></i>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="nombres" required placeholder="NOMBRES">
+              <input type="text" class="form-control" name="nombre" required placeholder="NOMBRE">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                  <span class="fas fa-tractor"></span>
                 </div>
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="apellidos" required placeholder="APELLIDOS">
+              <input type="text" class="form-control" name="fabricante" required placeholder="FABRICANTE">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-user"></span>
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
                 </div>
               </div>
             </div>
+            <label class="label-form" for="fecha_adquisicion">FECHA DE ADQUSICION</label>
             <div class="input-group mb-3">
-              <input type="number" class="form-control" name="telefono" required placeholder="TELEFONO">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-phone"></span>
+                <input type="date" class="form-control" name="fecha_adquisicion" required>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="direccion" required placeholder="DIRECCION">
+              <input type="number" class="form-control" name="costo_adquisicion" required placeholder="COSTO DE ADQUSICION">
               <div class="input-group-append">
                 <div class="input-group-text">
-                  <span class="fas fa-location"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="email" class="form-control" name="email" required placeholder="EMAIL">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" name="password" required placeholder="CONTRASEÑA">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
+                    <i class="fa-solid fa-dollar-sign"></i>
                 </div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-md-6">
-                <select class="form-control" name="rol" id="">
-                  <option value="SUPERADMIN">SUPERADMIN</option>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="AGRICULTORES">AGRICULTORES</option>
-                  <option value="JARDINEROS">JARDINEROS</option>
-                  <option value="OPERADOR MAQUINARIA">OPERADOR MAQUINARIA</option>
-                  <option value="GANADEROS">GANADEROS</option>
-                  <option value="ASEADOR">ASEADOR</option>
-                  <option value="PERSONAL MANTENIMIENTO">PERSONAL MANTENIMIENTO</option>
+                <select class="form-control" name="tipo" id="">
+                    <option value="" disabled selected>TIPO DE MAQUINARIA</option>
+                    <option value="Maquinaria Pesada">Maquinaria Pesada</option>
+                    <option value="Maquinaria Ligera">Maquinaria Ligera</option>
+                    <option value="Equipos Manuales">Equipos Manuales</option>
+                    <option value="Equipos Automatizados">Equipos Automatizados</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <select class="form-control" name="estado" id="">
-                  <option value="ACTIVO">ACTIVO</option>
-                  <option value="INACTIVO">INACTIVO</option>
+                    <option value="" disabled selected>ESTADO</option>
+                    <option value="ACTIVA">ACTIVA</option>
+                    <option value="INACTIVA">INACTIVA</option>
+                    <option value="SUSPENDIDA">SUSPENDIDA</option>
+                    <option value="MANTENIMIENTO">MANTENIMIENTO</option>
                 </select>
               </div>
             </div>
@@ -292,7 +281,5 @@
     });
   </script>
 
-
 </body>
-
 </html>

@@ -1,204 +1,231 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DashBoard - Admin</title>
+<?php
+  $this->load->view('dashboard/superadmin/layoutsSuperAdmin/header');
+?>
+  <?php
+    $dataSidebar['session']=$session;
+    $dataSidebar['OptionSelected']='Perfil';
+    
+    $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
+  ?>
 
-  <link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/myStyles2.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">  
-  <link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/fontawesome-free/css/all.min.css">
-  <link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/adminlte.min.css">
-  
-  <style>
-    .contenedor{
-      width: 400px;
-    }
-  </style>
-
-</head>
-
-<body class="hold-transition sidebar-mini">
-
-<div class="wrapper">
-  <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?=base_url('superadmin/Dashboard/Inicio')?>" class="nav-link">Inicio</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="<?=base_url('superadmin/Dashboard/Inicio')?>" class="brand-link">
-      <img src="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AgroControl</span>
-    </a>
-
-    <div class="sidebar">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="http://localhost/AgroControl/assets/dist/img/users/avatar0.png" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-            <a href="<?=base_url('superadmin/Dashboard/MiPerfil')?>" class="d-block"><?= explode(" ", $session['nombre'])[0]." ".explode(" ", $session['apellido'])[0] ?></a>
-        </div>
-      </div>
-
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Buscar Modulos" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="<?=base_url('superadmin/Dashboard/Usuarios')?>" class="nav-link">
-              <i class="fa-solid fa-users"></i>
-              <p>USUARIOS</p>
-            </a>
-          </li>
-          <li class="nav-item mt-5 bg-danger">
-            <a href="<?=base_url('Start/cerrarSession')?>" class="nav-link">
-              <i class="fa-solid fa-right-from-bracket"></i>
-              <p>CERRAR SESSION</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </aside>
-  
+    <?php
+      if (isset($passwordActualizada)) {
+        ?>
+          <script>
+            Swal.fire({
+              title: "CONTRASEÑA ACTUALIZADA",
+              text: "La Contraseña se actualizo correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }elseif(isset($NewPasswordNoCoincide)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "NO SE ACTUALIZO",
+              text: "La nueva contraseña no coincide con la confirmacion",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($camposvacios)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ERROR EN DATOS",
+              text: "Los campos estan vacios",
+              icon: "error"
+            });
+          </script>
+        <?php
+      }elseif(isset($passwordincorrecta)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "CONTRASEÑA INCORRECTA",
+              text: "La contraseña ingresada es incorrecta",
+              icon: "error"
+            });
+          </script>
+        <?php
+      }elseif(isset($perfilactualizado)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION CORRECTA",
+              text: "Tus datos personales se actualizaron correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }elseif(isset($datosrepetidos)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION INCORRECTA",
+              text: "Datos ingresados ya existen en el sistema, intente nuevamente",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($formatoincorrecto)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION INCORRECTA",
+              text: "El archivo ingresado no es valido, intente de nuevo",
+              icon: "warning"
+            });
+          </script>
+        <?php
+      }elseif(isset($ImgProfileActualizada)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ACTUALIZACION CORRECTA",
+              text: "La Imagen se actualizo correctamente, por su seguridad se cerrara la sesion actual!",
+              icon: "success"
+            });
+          </script>
+          <meta http-equiv="refresh" content="4;url=<?= base_url('Start/cerrarSession')?>">
+        <?php
+      }
+    ?>
   
   <div class="content-wrapper">
-
-    <div class="col-12 m-0 p-3">
-      <h2 class="text-center text-dark"><b>MI PERFIL</b></h2>
-    </div>
+    <section class="content-header">
+      <div class="container-fluid">
+      </div>
+    </section>
 
     <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
 
-      <div class="d-flex justify-content-center">
-        <div class="col-md-6">
-          <div class="card card-widget widget-user shadow">
-            
-            <div class="widget-user-header bg-dark p-4">
-              <h5 class="widget-user-desc"><?=$session['documento']?></h5>
-              <h3 class="widget-user-username"><?=$session['nombre']?> <?=$session['apellido']?></h3>
-            </div>
+            <div class="card card-orange card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center ProfilePic">
+                  <button class="btn" data-bs-toggle="modal" data-bs-target="#EditUserImg">
+                    <img class="img-fluid img-circle imagePic" src="http://localhost/AgroControl/Uploads/<?=$session['imguser']?>" alt="User profile picture">
+                    <div class="overlay d-flex justify-content-center">
+                      <div class="container py-2">
+                        <div class="text-center">
+                          <i class="fa-solid fa-camera fa-3x mb-2"></i>
+                          <p class="mb-0">ACTUALIZAR FOTO DE PERFIL</p>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
 
-            <div class="widget-user-image mt-2">
-              <img class="img-circle elevation-2" src="http://localhost/AgroControl/assets/dist/img/users/avatar0.png" alt="User Avatar">
-            </div>
+                <h3 class="profile-username text-center"><?=$session['nombre']?> <?=$session['apellido']?></h3>
+                <p class="text-muted text-center"><?=$session['rol']?></p>
 
-            <div class="card-footer">
-              <div class="row">
-                  <div class="col-sm-4 border-right">
-                      <div class="description-block">
-                          <h5 class="description-header"><?=$session['rol']?></h5>
-                          <span class="description-text">ROL</span>
-                      </div>
-                  </div>
-                  <div class="col-sm-4 border-right">
-                      <div class="description-block">
-                          <h5 class="description-header"><?=$session['email']?></h5>
-                          <span class="description-text">EMAIL</span>
-                      </div>
-                  </div>
-                  <div class="col-sm-4">
-                      <div class="description-block">
-                          <h5 class="description-header"><?=$session['estado']?></h5>
-                          <span class="description-text">ESTADO</span>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header"><?=$session['telefono']?></h5>
-                        <span class="description-text">TELEFONO</span>
-                    </div>
-                </div>
-                <div class="col-sm-4 border-right">
-                    <div class="description-block">
-                        <h5 class="description-header"><?=$session['direccion']?></h5>
-                        <span class="description-text">DIRECCION</span>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="description-block">
-                        <h5 class="description-header"><?=$session['id_usuario']?></h5>
-                        <span class="description-text">ID</span>
-                    </div>
-                </div>
-              </div>
-              <div class="row mt-4">
-                <div class="col-sm-4">
-                  <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" title="CAMBIAR CONTRASEÑA" data-bs-toggle="modal" data-bs-target="#staticBackdropPassword"><i class="fa-solid fa-lock"></i></button>
-                  </div>
-                </div>
-                <div class="col-sm-4">
-                  <span></span>
-                </div>
-                <div class="col-sm-4">
-                  <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" title="EDITAR PERFIL" data-bs-toggle="modal" data-bs-target="#staticBackdropPerfil"><i class="fa-solid fa-pencil"></i></button>
-                  </div>
-                </div>
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Correo Electronico</b> <a class="float-right"><span class="text-orange"><?=$session['email']?></span></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Contraseña</b> <a class="float-right"><span class="text-orange">..............</span></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Id De Usuario</b> <a class="float-right"><span class="text-orange"><?=$session['id_usuario']?></span></a>
+                  </li>
+                </ul>
+
+                <button class="btn bg-orange btn-block" title="CAMBIAR CONTRASEÑA" data-bs-toggle="modal" data-bs-target="#staticBackdropPassword"><i class="fa-solid fa-lock" style="color: #ffffff;"></i></button>
               </div>
             </div>
+          </div>
+          
+          
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills text-end">
+                  <li class="nav-item"><a class="nav-link active" href="#Inicio" data-toggle="tab">Inicio</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#MisDatos" data-toggle="tab">Mis Datos</a></li>
+                  <a href="<?=base_url('Start/cerrarSession')?>" class="btn bg-orange">
+                    <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i>
+                    <span class="text-white">CERRAR SESSION</span>
+                  </a>
+                </ul>
+                <div class="d-flex justify-content-end">
+                  
+                </div>
+              </div>
 
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="Inicio">
+                    <div id="horaActual"></div>
+                    <h4>Bienvenido a tu perfil de <b>AgroControl</b>, gracias por elegir a ENGINNERSOFT como tu desarrollador.</h4>
+                    <div class="d-flex justify-content-center py-3">
+                      <img class="img-fluid" width="500" height="400" src="http://localhost/AgroControl/assets/dist/img/innovaciondigital.gif" alt="img">
+                    </div>
+
+                  </div>
+
+                  <div class="tab-pane" id="MisDatos">
+                    <div class="form-group row">
+                      <label for="nombre" class="col-sm-2 col-form-label">Nombre(s)</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><?=$session['nombre']?></h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="apellido" class="col-sm-2 col-form-label">Apellido(s)</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><?=$session['apellido']?></h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="documento" class="col-sm-2 col-form-label">Documento</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><?=$session['documento']?></h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="direccion" class="col-sm-2 col-form-label">Direccion</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><?=$session['direccion']?></h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><?=$session['telefono']?></h3>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="estado" class="col-sm-2 col-form-label">Estado</label>
+                      <div class="col-sm-10">
+                        <h3 class="profile-username text-center"><span class="text-success"><?=$session['estado']?></span></h3>
+                      </div>
+                    </div> 
+                    <div class="form-group row">
+                      <label for="estado" class="col-sm-2 col-form-label">OPCIONES</label>
+                        <div class="col-sm-10">
+                          <button class="btn btn-primary btn-block" title="EDITAR PERFIL" data-bs-toggle="modal" data-bs-target="#staticBackdropPerfil"><i class="fa-solid fa-pencil"></i></button>
+                        </div>
+                      </div>             
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </div>
 
-  <footer class="main-footer bg-dark">
-    <div class="float-right d-none d-sm-block">
-      <b>Exotic Soft</b>
-    </div>
-    <strong>Copyright &copy; 2023</strong>
-  </footer>
+  <?php
+    $this->load->view('dashboard/superadmin/layoutsSuperAdmin/footer');
+  ?>
 
   <aside class="control-sidebar control-sidebar-dark">
   </aside>
@@ -209,9 +236,8 @@
 <div class="modal fade" id="staticBackdropPassword" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-dark">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">CAMBIAR CONTRASEÑA</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form action="<?=base_url('superadmin/usuarios/UsersController/cambiarPassword/' . $session['id_usuario'])?>" method="POST">
@@ -237,11 +263,31 @@
   
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">CERRAR</button>
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CERRAR</button>
           <button type="submit" class="btn btn-outline-success">CAMBIAR CONTRASEÑA</button>
         </div>
       </form>
 
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="EditUserImg" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">ACTUALIZAR FOTO DE PERFIL</h1>
+      </div>
+      <form action="<?=base_url('superadmin/usuarios/UsersController/cargar_imagen')?>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <input type="hidden" value="<?=$session['id_usuario']?>" name="id_usuario">
+          <input class="form-control" type="file" name="upload"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CERRAR</button>
+          <button type="submit" class="btn btn-outline-success">ACTUALIZAR</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -327,7 +373,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">CERRAR</button>
+          <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CERRAR</button>
           <button type="submit" class="btn btn-outline-success">ACTUALIZAR DATOS</button>
         </div>
       </form>
@@ -335,6 +381,7 @@
   </div>
 </div>
 
+<script src="http://localhost/AgroControl/assets/dist/js/script.js"></script>
 <script src="http://localhost/AgroControl/assets/plugins/jquery/jquery.min.js"></script>
 <script src="http://localhost/AgroControl/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="http://localhost/AgroControl/assets/dist/js/adminlte.min.js"></script>

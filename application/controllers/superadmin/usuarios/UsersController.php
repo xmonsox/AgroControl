@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UsersController extends CI_Controller {
+
+
 	public function __construct(){
         parent::__construct();
 		$this->load->database();
@@ -22,16 +24,19 @@ class UsersController extends CI_Controller {
             die();
         }
     }
-    public function CrearUsuario(){
 
+
+    public function CrearUsuario(){
 		$caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$longitud = 10;
 		$id_usuario = '';
+
 		for ($i = 0; $i < $longitud; $i++) {
 			$indice_aleatorio = rand(0, strlen($caracteres_permitidos) - 1);
 			$caracter_aleatorio = $caracteres_permitidos[$indice_aleatorio];
 			$id_usuario .= $caracter_aleatorio;
 		}
+
 		if($this->input->server("REQUEST_METHOD")=="POST"){
 			$cedula = $this->input->post("documento");
             $nombre = $this->input->post("nombres");
@@ -42,25 +47,41 @@ class UsersController extends CI_Controller {
 			$password = $this->input->post("password");
 			$rol = $this->input->post("rol");
 			$estado = $this->input->post("estado");
+			$imguser = "default.png"; 
 			
-            if($id_usuario && $cedula && $nombre && $apellido && $telefono && $direccion && $email && $password && $rol && $estado != ""){
+            if($id_usuario && $cedula && $nombre && $apellido && $telefono && $direccion && $email && $password && $rol && $estado && $imguser != ""){
                 
 				$cedulaValida = $this->UsuariosModel->validarCedula($cedula);
-				$userValido = $this->UsuariosModel->validarEmail($email);
+				$emailValido = $this->UsuariosModel->validarEmail($email);
 
-				if($cedulaValida && $userValido){
-					$this->UsuariosModel->insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password);
+				if($cedulaValida && $emailValido){
+					$this->UsuariosModel->insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password, $imguser);
 					
-					$data['Usuarios'] = $this->UsuariosModel->findAll();
+					$session = $this->session->userdata("session_actual");
+					$id_usuario = $session['id_usuario'];  
+
+					$data['Usuarios'] = $this->UsuariosModel->findAll($id_usuario);
 					$data['session'] = $this->session->userdata("session_actual");
 					$data['usuarioinsertado']=true;
 					$this->load->view('Dashboard/superadmin/usuarios', $data);
 					
 				}else{
-					redirect('superadmin/Dashboard/RegistrarUsuario', 'refresh');
+					$session = $this->session->userdata("session_actual");
+					$id_usuario = $session['id_usuario'];  
+
+					$data['Usuarios'] = $this->UsuariosModel->findAll($id_usuario);
+					$data['session'] = $this->session->userdata("session_actual");
+					$data['datorepetido']=true;
+					$this->load->view('Dashboard/superadmin/usuarios', $data);
 				}
             }else{
-				redirect('superadmin/Dashboard/RegistrarUsuario', 'refresh');
+				$session = $this->session->userdata("session_actual");
+				$id_usuario = $session['id_usuario'];  
+
+				$data['Usuarios'] = $this->UsuariosModel->findAll($id_usuario);
+				$data['session'] = $this->session->userdata("session_actual");
+				$data['camposvacios']=true;
+				$this->load->view('Dashboard/superadmin/usuarios', $data);
             }
 		}
 	}
@@ -73,8 +94,8 @@ class UsersController extends CI_Controller {
         $DatosUsuario = $this->UsuariosModel->findByid($id_usuario);
         $data['usuario'] = $DatosUsuario;
 		$this->load->view('Dashboard/superadmin/Editar', $data);
+	}
 
-    }
 
     public function ActualizarDatosUsuario() {
         $id = $this->input->post('id');
@@ -94,15 +115,40 @@ class UsersController extends CI_Controller {
 
 			if($cedulaValida && $userValido){
 				$this->UsuariosModel->actualizarUsuario($id, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado);
-				redirect('superadmin/Dashboard/Usuarios', 'refresh');
-				
+				$session = $this->session->userdata("session_actual");
+				$id_usuario = $session['id_usuario'];  
+
+				$data['Usuarios'] = $this->UsuariosModel->findAll($id_usuario);
+				$data['session'] = $this->session->userdata("session_actual");
+				$data['usuarioactualizado']=true;
+				$this->load->view('Dashboard/superadmin/usuarios', $data);
 			}else{
-				redirect('superadmin/Dashboard/EditarUsuario', 'refresh');
+				$session = $this->session->userdata("session_actual");
+				$DatosUsuario = $this->UsuariosModel->findByid($id);
+				
+				$data['session'] = $this->session->userdata("session_actual");
+				$data['usuario'] = $DatosUsuario;
+				$data['datorepetido']=true;
+
+				$this->load->view('Dashboard/superadmin/Editar', $data);
 			}
 		}else{
-			redirect('superadmin/Dashboard/EditarUsuario', 'refresh');
+			$session = $this->session->userdata("session_actual");
+			$DatosUsuario = $this->UsuariosModel->findByid($id);
+
+			$data['session'] = $this->session->userdata("session_actual");
+			$data['usuario'] = $DatosUsuario;
+			$data['camposvacios']=true;
+			
+			$this->load->view('Dashboard/superadmin/Editar', $data);
 		}
 	}
+
+	public function deleteUsuario($id_usuario){
+        $this->UsuariosModel->delete($id_usuario);
+		redirect('superadmin/Dashboard/Usuarios', 'refresh');
+    }
+
 
 	public function ActualizarMiPerfil() {
         $id = $this->input->post('id');
@@ -122,15 +168,22 @@ class UsersController extends CI_Controller {
 
 			if($cedulaValida && $userValido){
 				$this->UsuariosModel->actualizarPerfil($id, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $tipo, $estado);
-                redirect('Start/cerrarSession');
 				
+				$data['perfilactualizado'] = true;
+				$data['session'] = $this->session->userdata("session_actual");
+				$this->load->view('Dashboard/superadmin/perfil', $data);
 			}else{
-				redirect('superadmin/Dashboard/MiPerfil', 'refresh');
+				$data['datosrepetidos'] = true;
+				$data['session'] = $this->session->userdata("session_actual");
+				$this->load->view('Dashboard/superadmin/perfil', $data);
 			}
 		}else{
-			redirect('superadmin/Dashboard/MiPerfil', 'refresh');
+			$data['camposvacios'] = true;
+			$data['session'] = $this->session->userdata("session_actual");
+			$this->load->view('Dashboard/superadmin/perfil', $data);
 		}
 	}
+	
 
 	public function cambiarPassword($id){
         $CurrentPasword = $this->input->post('CurrentPassword');
@@ -144,22 +197,65 @@ class UsersController extends CI_Controller {
 			if(md5($CurrentPasword) == $contrasenaEnBdD){
 				if($NewPassword == $ConfirmPassword){
 					$this->UsuariosModel->UpdatePassword($id, $NewPassword);
-					redirect('Start/cerrarSession');
-				}else{
-					echo "error en la nueva contraseña";
+
+					$data['passwordActualizada'] = true;
+					$data['session'] = $this->session->userdata("session_actual");
+					$this->load->view('Dashboard/superadmin/perfil', $data);
+				}else{										
+					$data['NewPasswordNoCoincide'] = true;
+					$data['session'] = $this->session->userdata("session_actual");
+					$this->load->view('Dashboard/superadmin/perfil', $data);
 				}
 			}else{
-				echo "La constraseña ingresada no coincide";
+				$data['passwordincorrecta'] = true;
+				$data['session'] = $this->session->userdata("session_actual");
+				$this->load->view('Dashboard/superadmin/perfil', $data);
 			}
 		}else{
-			echo "Los inputs se enviarion vacios";
+			$data['camposvacios'] = true;
+			$data['session'] = $this->session->userdata("session_actual");
+			$this->load->view('Dashboard/superadmin/perfil', $data);
 		}
-		
-
 	}
 
-	public function deleteUsuario($id_usuario){
-        $this->UsuariosModel->delete($id_usuario);
-		redirect('superadmin/Dashboard/Usuarios', 'refresh');
+	function cargar_imagen() {
+        $id_usuario = $this->input->post('id_usuario');
+		$nombreArchivo = $_FILES["upload"]["name"];
+		
+        $mi_archivo = 'upload';
+        $config['upload_path'] = "uploads/";
+        $config['file_name'] = "UserImg@".$id_usuario."-".$nombreArchivo;
+        $config['allowed_types'] = "jpg|jpeg|png";
+        $config['max_size'] = "50000";
+        $config['max_width'] = "2000";
+        $config['max_height'] = "2000";
+
+        $this->load->library('upload', $config);
+        
+		if (isset($_FILES["upload"]) && $_FILES["upload"]["error"] == 0) {
+			if (!$this->upload->do_upload($mi_archivo)) {
+				//*** ocurrio un error
+				//$data['uploadError'] = $this->upload->display_errors();
+				//echo $this->upload->display_errors();
+				//return;
+				$data['formatoincorrecto'] = true;
+				$data['session'] = $this->session->userdata("session_actual");
+				$this->load->view('Dashboard/superadmin/perfil', $data);
+			}else{
+				//var_dump($this->upload->data());
+				$nombreImagen = $config['file_name'];
+				$nombreImagensinespacios = str_replace(" ", "_", $nombreImagen);
+				$imguser = $nombreImagensinespacios;
+				
+				$this->UsuariosModel->UpdateProfilePic($id_usuario, $imguser);
+				$data['ImgProfileActualizada'] = true;
+				$data['session'] = $this->session->userdata("session_actual");
+				$this->load->view('Dashboard/superadmin/perfil', $data);
+			}
+		} else {
+			$data['camposvacios'] = true;
+			$data['session'] = $this->session->userdata("session_actual");
+			$this->load->view('Dashboard/superadmin/perfil', $data);
+		}
     }
 }

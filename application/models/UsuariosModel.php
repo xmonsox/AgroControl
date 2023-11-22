@@ -10,6 +10,11 @@ class UsuariosModel extends CI_Model{
         $this->load->database();
     }
 
+    public function ContarUsuariosDelSistema(){
+        $cantidad_registros = $this->db->count_all('usuarios');
+        return $cantidad_registros;
+    }
+
     public function validarIngreso($email, $password){
         $this->db->select('email, passw');
 		$this->db->where('email', $email);
@@ -26,7 +31,7 @@ class UsuariosModel extends CI_Model{
 
     public function getUsuarioByEmail($email){
         
-        $this->db->select('id_usuario, documento, nombre, apellido, telefono, direccion, rol, estado, email, passw');
+        $this->db->select('id_usuario, documento, nombre, apellido, telefono, direccion, rol, estado, email, passw, imguser');
         $this->db->where('email', $email);
         $registros = $this->db->get('usuarios')->result();
         
@@ -88,7 +93,7 @@ class UsuariosModel extends CI_Model{
         return (sizeof($registros) == 0);
     }
 
-    public function insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password){
+    public function insertar($id_usuario, $cedula, $nombre, $apellido, $telefono, $direccion, $email, $rol, $estado, $password, $imguser){
         $data = [
             'id_usuario' => $id_usuario,
             'documento' => $cedula,
@@ -100,12 +105,14 @@ class UsuariosModel extends CI_Model{
             'rol' => $rol,
             'estado' => $estado,
             'passw' => md5($password),
+            'imguser'=>$imguser
         ];
         return $this->db->insert('usuarios', $data);
     }
 
-    function findAll(){
+    function findAll($id_usuario){
         $this->db->select();
+        $this->db->where("id_usuario != ", $id_usuario);
         $this->db->from($this->table);
         $query = $this->db->get();
         return $query->result();
@@ -163,6 +170,15 @@ class UsuariosModel extends CI_Model{
             $this->db->where('id_usuario', $id);
             $this->db->update('usuarios', $data);
         }
+    }
+
+    public function UpdateProfilePic($id_usuario, $imguser){
+        $data = array(
+            'imguser' => $imguser,
+        );
+
+        $this->db->where('id_usuario', $id_usuario);
+        $this->db->update('usuarios', $data);
     }
 
     function delete($id_usuario){

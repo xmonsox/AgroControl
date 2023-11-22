@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/adminlte.min.css">
+    <link rel="icon" href="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png">
 
     <style>
         .contenedor{
@@ -30,13 +31,17 @@
 
 </head>
 <body>
-    <!-- Header -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+
     <header id="header" class="bg-dark text-white text-center py-5">
-        <div class="container">
-            <img src="http://localhost/AgroControl/assets/dist/img/LogoAgroControl.png" alt="AdminLTE Logo" class="" style="opacity: .8">
+        <div class="container py-3">
+            <img src="http://localhost/AgroControl/assets/dist/img/LogotipoAgroControl_085246.png" alt="AdminLTE Logo" class="img-fluid img-circle" style="opacity: .8">
         </div>
         <div class="mt-2">
-            <h1>AgroControl</h1>
+            <h1><b><i>AgroControl</i></b></h1>
+            <p>Sistema gestor dedicado a multiple informacion de tu finca</p>
         </div>
     </header>
 
@@ -48,11 +53,11 @@
                     <div class="card card-outline card-dark">
 
                         <div class="card-header text-center">
-                            <a href="" class="h1"><b>LOGIN</b></a>
+                            <a href="#" class="h1"><b>INICIAR SESSION</b></a>
                         </div>
 
                         <div class="card-body">
-                            <p class="login-box-msg">Ingresa tus datos para Iniciar Session</p>
+                            <p class="login-box-msg">Ingresa tus datos personales</p>
                             <form action="<?=base_url('Login/validarInicioSession')?>" method="POST">
                                 <div class="input-group mb-3">
                                     <input type="email" class="form-control" required name="email" placeholder="CORREO ELECTRONICO">
@@ -78,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <button type="submit" class="btn btn-dark btn-block">INGRESAR</button>
+                                        <button type="submit" class="btn btn-success btn-block">INGRESAR</button>
                                     </div>
                                 </div>
                             </form>
@@ -102,7 +107,7 @@
         <div class="float-right d-none d-sm-block">
             <b>All Rights Reserved</b> 2024
         </div>
-        <strong>EXOTIC SOFT</strong>
+        ENGINNERSOFT
     </footer>
 
     <!-- Modal -->

@@ -8,6 +8,10 @@ class Dashboard extends CI_Controller {
 		$this->load->database();
 		$this->load->model('ProveedoresModel');
 		$this->load->model('UsuariosModel');
+		$this->load->model('RepuestosModel');
+		$this->load->model('ActividadesModel');
+		$this->load->model('MaquinariaModel');
+
 
         $validacion = $this->session->has_userdata("session_actual");
 		
@@ -25,17 +29,29 @@ class Dashboard extends CI_Controller {
         }
     }
 
+
 	public function Inicio(){
+		$data['usuariostotales'] = $this->UsuariosModel->ContarUsuariosDelSistema();
+		$data['maquinastotales'] = $this->MaquinariaModel->ContarMaquinariaDelSistema();
+		$data['proveedorestotales'] = $this->ProveedoresModel->ContarProveedoresDelSistema();
+		$data['actividadestotales'] = $this->ActividadesModel->ContarActividadesDelSistema();
+
+
         $data['session'] = $this->session->userdata("session_actual");
 		$this->load->view('Dashboard/superadmin/plantilla', $data);
 	}
 
-	public function Usuarios(){
-		$data['Usuarios'] = $this->UsuariosModel->findAll();
 
+	public function Usuarios(){
+        $session = $this->session->userdata("session_actual");
+		$id_usuario = $session['id_usuario']; 
+		
+		$data['Usuarios'] = $this->UsuariosModel->findAll($id_usuario);
 		$data['session'] = $this->session->userdata("session_actual");
 		$this->load->view('Dashboard/superadmin/usuarios', $data);
 	}
+
+
 	public function Proveedores(){
 		$data['Proveedores'] = $this->ProveedoresModel->findAll();
 
@@ -50,4 +66,32 @@ class Dashboard extends CI_Controller {
 	}
 
 
+	public function Repuestos(){
+        $data['repuestos'] = $this->RepuestosModel->getAllRepuestos();
+        $data['proveedores'] = $this->RepuestosModel->getIdNameProveedores();
+        $data['session'] = $this->session->userdata("session_actual");
+		$this->load->view('Dashboard/superadmin/Repuestos', $data);
+    }
+
+
+	public function Actividades(){
+		$data['Actividades'] = $this->ActividadesModel->findAll();
+
+		$data['session'] = $this->session->userdata("session_actual");
+		$this->load->view('Dashboard/superadmin/actividades', $data);
+	}
+
+	public function Maquinaria(){
+		$data['maquinas'] = $this->MaquinariaModel->findAll();
+
+		$data['session'] = $this->session->userdata("session_actual");
+		$this->load->view('Dashboard/superadmin/maquinaria', $data);
+	}
+
+	public function Asignaciones(){
+		$data['Actividades'] = $this->ActividadesModel->findAll();
+
+		$data['session'] = $this->session->userdata("session_actual");
+		$this->load->view('Dashboard/superadmin/asignaciones', $data);
+	}
 }

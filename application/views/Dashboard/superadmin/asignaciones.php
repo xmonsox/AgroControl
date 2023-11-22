@@ -3,7 +3,7 @@
 ?>
   <?php
     $dataSidebar['session']=$session;
-    $dataSidebar['OptionSelected']='usuarios';
+    $dataSidebar['OptionSelected']='asignaciones';
     
     $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
   ?>
@@ -70,7 +70,7 @@
 
                 <div class="card-body">
                   <div class="d-flex justify-content-start py-2">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-user-plus"></i> REGISTRAR USUARIO</button>
+                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-circle-check"></i> REGISTRAR ASIGNACION</button> -->
                   </div>
                   <table id="example1" class="table table-bordered table-hover">
                     <thead>
@@ -90,7 +90,7 @@
                     </thead>
 
                     <tbody>
-                      <?php foreach ($Usuarios as $usuario): ?>
+                      <!-- <?php foreach ($Usuarios as $usuario): ?>
                         <tr>
                           <td><?= $usuario->id_usuario ?></td>
                           <td><?= $usuario->documento ?></td>
@@ -135,7 +135,7 @@
                             </button> 
                           </td>
                         </tr>
-                      <?php endforeach; ?>
+                      <?php endforeach; ?> -->
                     </tbody>
                   </table>
                 </div>

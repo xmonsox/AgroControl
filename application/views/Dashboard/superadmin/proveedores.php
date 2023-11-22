@@ -1,162 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+  $this->load->view('dashboard/superadmin/layoutsSuperAdmin/header');
+?>
+  <?php
+    $dataSidebar['session']=$session;
+    $dataSidebar['OptionSelected']='proveedores';
+    
+    $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
+  ?>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DashBoard - Admin </title>
-
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/myStyles2.css">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/adminlte.min.css">
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet"
-		href="http://localhost/AgroControl/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-	<link rel="stylesheet"
-		href="http://localhost/AgroControl/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-	<link rel="stylesheet"
-		href="http://localhost/AgroControl/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-
-
-	<style>
-		.info-icon {
-			color: rgb(255, 195, 6);
-			font-size: 5em;
-		}
-
-		.icono {
-			color: #343a40;
-		}
-	</style>
-
-</head>
-
-<body class="hold-transition sidebar-mini">
-	<div class="wrapper">
-		<nav class="main-header navbar navbar-expand navbar-dark navbar-light">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-				</li>
-				<li class="nav-item d-none d-sm-inline-block">
-					<a href="<?= base_url('superadmin/Dashboard/Inicio') ?>" class="nav-link">Inicio</a>
-				</li>
-			</ul>
-
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<div class="navbar-search-block">
-						<form class="form-inline">
-							<div class="input-group input-group-sm">
-								<input class="form-control form-control-navbar" type="search" placeholder="Search"
-									aria-label="Search">
-								<div class="input-group-append">
-									<button class="btn btn-navbar" type="submit">
-										<i class="fas fa-search"></i>
-									</button>
-									<button class="btn btn-navbar" type="button" data-widget="navbar-search">
-										<i class="fas fa-times"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
-						<i class="fas fa-expand-arrows-alt"></i>
-					</a>
-				</li>
-			</ul>
-		</nav>
-
-
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<a href="<?= base_url('superadmin/Dashboard/Inicio') ?>" class="brand-link">
-				<img src="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-					class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text font-weight-light">AgroControl</span>
-			</a>
-
-			<div class="sidebar">
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="http://localhost/AgroControl/assets/dist/img/users/avatar0.png"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info">
-						<a href="<?= base_url('superadmin/Dashboard/MiPerfil') ?>" class="d-block">
-							<?= explode(" ", $session['nombre'])[0] . " " . explode(" ", $session['apellido'])[0] ?>
-						</a>
-					</div>
-				</div>
-
-				<div class="form-inline">
-					<div class="input-group" data-widget="sidebar-search">
-						<input class="form-control form-control-sidebar" type="search" placeholder="Buscar Modulos"
-							aria-label="Search">
-						<div class="input-group-append">
-							<button class="btn btn-sidebar">
-								<i class="fas fa-search fa-fw"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-						data-accordion="false">
-						<li class="nav-item">
-							<a href="<?= base_url('superadmin/Dashboard/Usuarios') ?>" class="nav-link">
-								<i class="fa-solid fa-users"></i>
-								<p>USUARIOS</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="<?= base_url('superadmin/Dashboard/Proveedores') ?>" class="nav-link active">
-								<i class="fa-solid fa-users"></i>
-								<p>PROVEEDORES</p>
-							</a>
-						</li>
-
-						<li class="nav-item mt-5 bg-danger">
-							<a href="<?= base_url('Start/cerrarSession') ?>" class="nav-link">
-								<i class="fa-solid fa-right-from-bracket"></i>
-								<p>CERRAR SESSION</p>
-							</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</aside>
-
-		<?php
+	<?php
 		if (isset($proveedorinsertado)) {
 			?>
-			<script>
+				<script>
+					Swal.fire({
+						title: "REGISTRO EXITOSO",
+						text: "El Proveedor se ha registrado correctamente",
+						icon: "success"
+					});
+				</script>
+				<meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Proveedores') ?>">
+			<?php
+		}elseif(isset($datorepetido)){
+			?>
+				<script>
+					Swal.fire({
+					title: "REGISTRO FALLIDO",
+					text: "Los Datos ingresados del proveedor ya existen",
+					icon: "error"
+					});
+				</script>
+			  	<meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Proveedores')?>">
+			<?php
+		}elseif(isset($camposvacios)){
+			?>
+				<script>
 				Swal.fire({
-					title: "REGISTRO EXITOSO",
-					text: "El usuario se ha registrado correctamente",
+					title: "ERROR EN DATOS",
+					text: "Los campos estan vacios",
+					icon: "warning"
+				});
+				</script>
+				<meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Proveedores')?>">
+			<?php
+		}elseif(isset($proveedoractualizado)){
+			?>
+				<script>
+				Swal.fire({
+					title: "ACTUALIZACION EXITOSA",
+					text: "El proveedor fue actualizado exitosamente",
 					icon: "success"
 				});
-			</script>
-			<meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios') ?>">
+				</script>
+				<meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Proveedores')?>">
 			<?php
 		}
-		?>
+	?>
 
 		<div class="content-wrapper">
 			<section class="content-header">
 				<div class="container-fluid">
+				</div>
 			</section>
 
 			<section class="content">
@@ -168,17 +71,17 @@
 
 								<div class="card-body">
 									<div class="d-flex justify-content-start py-2">
-										<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-											data-bs-target="#staticBackdrop"><i class="fa-solid fa-user-plus"></i>
-											REGISTRAR PROVEEDOR</button>
+										<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-boxes-packing"></i> REGISTRAR PROVEEDOR</button>
 									</div>
 									<table id="example1" class="table table-bordered table-hover">
 										<thead>
 											<tr class="bg-dark">
 												<th>ID</th>
+												<th>NIT</th>
 												<th>NOMBRE</th>
-												<th>TELEFONO</th>
+												<th>COD POSTAL</th>
 												<th>DIRECCION</th>
+												<th>TELEFONO</th>
 												<th>E-MAIL</th>
 												<th>EDITAR</th>
 												<th>ELIMINAR</th>
@@ -188,28 +91,20 @@
 										<tbody>
 											<?php foreach ($Proveedores as $proveedor): ?>
 												<tr>
-													<td>
-														<?= $proveedor->id_proveedor ?>
-													</td>
-													<td>
-														<?= $proveedor->nombre ?>
-													</td>
-													<td>
-														<?= $proveedor->telefono ?>
-													</td>
-													<td>
-														<?= $proveedor->direccion ?>
-													</td>
-													<td>
-														<?= $proveedor->email ?>
-													</td>
+													<td><?= $proveedor->id_proveedor ?></td>
+													<td><?= $proveedor->nit ?></td>
+													<td><?= $proveedor->nombre ?></td>
+													<td><?= $proveedor->codpostal ?></td>
+													<td><?= $proveedor->direccion ?></td>
+													<td><?= $proveedor->telefono ?></td>
+													<td><?= $proveedor->email ?></td>
 													<td class="text-center">
-                                                        <a href="<?=base_url('superadmin/proveedores/ProveedoresController/EditarProveedor/'.$proveedor->id_proveedor)?>"><button class="btn btn-outline-success" title="EDITAR"><i class="fa-solid fa-user-pen"></i></button></a>
+                                                        <a class="btn btn-outline-primary" title="EDITAR" href="<?=base_url('superadmin/proveedores/ProveedoresController/EditarProveedor/'.$proveedor->id_proveedor)?>"><i class="fa-solid fa-pen"></i></a>
 												    </td>
 													<td class="text-center">
 														<button class="btn btn-outline-danger" title="ELIMINAR"  
 														onclick="Swal.fire({
-																title: '¿Deseas eliminar este usuario?',
+																title: '¿Deseas eliminar este proveedor?',
 																text: 'No podras revertir este cambio!',
 																icon: 'warning',
 																confirmButtonColor: '#3085d6',
@@ -234,17 +129,14 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>	
 			</section>
 
 		</div>
 
-		<footer class="main-footer bg-dark">
-			<div class="float-right d-none d-sm-block">
-				<b>Exotic Soft</b>
-			</div>
-			<strong>Copyright &copy; 2023</strong>
-		</footer>
+		<?php
+			$this->load->view('dashboard/superadmin/layoutsSuperAdmin/footer');
+		?>
 
 		<aside class="control-sidebar control-sidebar-dark">
 		</aside>
@@ -258,33 +150,32 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header bg-dark">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-user-plus"></i>
+					<h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-boxes-packing"></i>
 						REGISTRAR PROVEEDOR</h1>
 				</div>
 				<form action="<?= base_url('superadmin/proveedores/ProveedoresController/CrearProveedor') ?>" method="POST">
 					<div class="modal-body">
-						<!-- <div class="input-group mb-3">
-							<input type="number" class="form-control" name="documento" required
-								placeholder="ID PROVEEDOR">
-							<div class="input-group-append">
-								<div class="input-group-text">
-									<span><i class="fa-solid fa-address-card"></i></span>
-								</div>
-							</div>
-						</div> -->
 						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="nombres" required placeholder="NOMBRES">
+							<input type="text" class="form-control" name="nit" required placeholder="NIT">
 							<div class="input-group-append">
 								<div class="input-group-text">
-									<span class="fas fa-user"></span>
+									<i class="fa-solid fa-barcode"></i>
 								</div>
 							</div>
 						</div>
 						<div class="input-group mb-3">
-							<input type="number" class="form-control" name="telefono" required placeholder="TELEFONO">
+							<input type="text" class="form-control" name="nombre" required placeholder="NOMBRE">
 							<div class="input-group-append">
 								<div class="input-group-text">
-									<span class="fas fa-phone"></span>
+									<i class="fa-solid fa-boxes-packing"></i>
+								</div>
+							</div>
+						</div>
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" name="codpostal" required placeholder="CODIGO POSTAL">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<i class="fa-solid fa-envelopes-bulk"></i>
 								</div>
 							</div>
 						</div>
@@ -293,6 +184,14 @@
 							<div class="input-group-append">
 								<div class="input-group-text">
 									<span class="fas fa-location"></span>
+								</div>
+							</div>
+						</div>
+						<div class="input-group mb-3">
+							<input type="number" class="form-control" name="telefono" required placeholder="TELEFONO">
+							<div class="input-group-append">
+								<div class="input-group-text">
+									<span class="fas fa-phone"></span>
 								</div>
 							</div>
 						</div>
@@ -306,7 +205,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">CANCELAR</button>
+						<button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CANCELAR</button>
 						<button type="submit" class="btn btn-outline-success">REGISTRAR</button>
 					</div>
 				</form>

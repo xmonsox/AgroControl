@@ -1,135 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DashBoard - Admin</title>
-
-	<link rel="stylesheet" href="http://localhost/PhpSebas27/DashBoardCodeIgniter/assets/dist/css/myStyles2.css">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/plugins/fontawesome-free/css/all.min.css">
-	<link rel="stylesheet" href="http://localhost/AgroControl/assets/dist/css/adminlte.min.css">
-
-</head>
-
-<body class="hold-transition sidebar-mini">
-
-	<div class="wrapper">
-
-		<nav class="main-header navbar navbar-expand navbar-dark navbar-light">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-				</li>
-				<li class="nav-item d-none d-sm-inline-block">
-					<a href="<?= base_url('superadmin/Dashboard/Inicio') ?>" class="nav-link">Inicio</a>
-				</li>
-			</ul>
-
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<div class="navbar-search-block">
-						<form class="form-inline">
-							<div class="input-group input-group-sm">
-								<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-								<div class="input-group-append">
-									<button class="btn btn-navbar" type="submit">
-										<i class="fas fa-search"></i>
-									</button>
-									<button class="btn btn-navbar" type="button" data-widget="navbar-search">
-										<i class="fas fa-times"></i>
-									</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-widget="fullscreen" href="#" role="button">
-						<i class="fas fa-expand-arrows-alt"></i>
-					</a>
-				</li>
-			</ul>
-		</nav>
-
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<a href="<?= base_url('superadmin/Dashboard/Inicio') ?>" class="brand-link">
-				<img src="http://localhost/AgroControl/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-					class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text font-weight-light">AgroControl</span>
-			</a>
-
-			<div class="sidebar">
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="http://localhost/AgroControl/assets/dist/img/users/avatar0.png" class="img-circle elevation-2"
-							alt="User Image">
-					</div>
-					<div class="info">
-						<a href="<?= base_url('superadmin/Dashboard/MiPerfil') ?>" class="d-block">
-							<?= explode(" ", $session['nombre'])[0] . " " . explode(" ", $session['apellido'])[0] ?>
-						</a>
-					</div>
-				</div>
-
-				<div class="form-inline">
-					<div class="input-group" data-widget="sidebar-search">
-						<input class="form-control form-control-sidebar" type="search" placeholder="Buscar Modulos"
-							aria-label="Search">
-						<div class="input-group-append">
-							<button class="btn btn-sidebar">
-								<i class="fas fa-search fa-fw"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						<li class="nav-item">
-							<a href="<?= base_url('superadmin/Dashboard/Usuarios') ?>" class="nav-link">
-								<i class="fa-solid fa-users"></i>
-								<p>USUARIOS</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="<?= base_url('superadmin/Dashboard/Proveedores') ?>" class="nav-link">
-								<i class="fa-solid fa-users"></i>
-								<p>PROVEEDORES</p>
-							</a>
-						</li>
-						<li class="nav-item mt-5 bg-danger">
-							<a href="<?= base_url('Start/cerrarSession') ?>" class="nav-link">
-								<i class="fa-solid fa-right-from-bracket"></i>
-								<p>CERRAR SESSION</p>
-							</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</aside>
-
+<?php
+  $this->load->view('dashboard/superadmin/layoutsSuperAdmin/header');
+?>
+  <?php
+    $dataSidebar['session']=$session;
+    $dataSidebar['OptionSelected']='Perfil';
+    
+    $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
+  ?>
 		<div class="content-wrapper">
 			<section class="content-header">
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1>Inicio Dashboard</h1>
+							
 						</div>
 					</div>
 				</div>
 			</section>
 
 			<section class="content">
+				
+				<div class="row">
+					<div class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-dark">
+						<div class="inner">
+							<h3><?=$proveedorestotales?></h3>
+							<p>Provedores Registrados</p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-ios-box"></i>
+						</div>
+						<a href="<?=base_url('superadmin/Dashboard/Proveedores')?>" class="small-box-footer">Proveedores <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-success">
+						<div class="inner">
+							<h3><?=$actividadestotales?></h3>
+
+							<p>Actividades Registradas</p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-android-checkmark-circle"></i>
+						</div>
+							<a href="<?=base_url('superadmin/Dashboard/Actividades')?>" class="small-box-footer">Actividades <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-primary">
+						<div class="inner">
+							<h3><?=$usuariostotales?></h3>
+							<p>Empleados Registrados</p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-android-people"></i>
+						</div>
+						<a href="<?=base_url('superadmin/Dashboard/Usuarios')?>" class="small-box-footer">Usuarios <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div class="col-lg-3 col-6">
+						<!-- small box -->
+						<div class="small-box bg-warning">
+						<div class="inner">
+							<h3><?=$maquinastotales?></h3>
+							<p>Maquinaria Registrada</p>
+						</div>
+						<div class="icon">
+							<i class="ion ion-android-train"></i>
+						</div>
+						<a href="<?=base_url('superadmin/Dashboard/Maquinaria')?>" class="small-box-footer">Maquinaria <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+				</div>
+
 				<div class="card">
 					<div class="card-header">
 						<?php
@@ -195,29 +145,16 @@
 							nosotros!</p>
 					</div>
 					<div class="card-footer">
-						ADMINISTRADOR
-					</div>
-				</div>
-				<div class="d-flex justify-content-center mt-5">
-					<div class="loader">
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
-						<div class="loader-square"></div>
+						SUPERADMIN
 					</div>
 				</div>
 			</section>
 		</div>
 
-		<footer class="main-footer bg-dark">
-			<div class="float-right d-none d-sm-block">
-				<b>Exotic Soft</b>
-			</div>
-			<strong>Copyright &copy; 2023</strong>
-		</footer>
+		
+		<?php
+			$this->load->view('dashboard/superadmin/layoutsSuperAdmin/footer');
+		?>
 
 		<aside class="control-sidebar control-sidebar-dark">
 		</aside>
@@ -226,6 +163,7 @@
 	<script src="http://localhost/AgroControl/assets/plugins/jquery/jquery.min.js"></script>
 	<script src="http://localhost/AgroControl/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="http://localhost/AgroControl/assets/dist/js/adminlte.min.js"></script>
+	<script src="http://localhost/AgroControl/assets/plugins/moment/moment.min.js"></script>
 
 </body>
 

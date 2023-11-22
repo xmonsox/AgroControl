@@ -38,7 +38,7 @@ class Login extends CI_Controller {
 						"estado" => $datosUsuario->estado,
 						"email" => $datosUsuario->email,
 						"passw" => $datosUsuario->passw,
-
+						"imguser" => $datosUsuario->imguser,
 					];
 
 					$this->session->set_userdata("session_actual", $dataSession);
