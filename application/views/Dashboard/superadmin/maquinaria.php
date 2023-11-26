@@ -97,21 +97,21 @@
                           <td><?= $maquinaria->costo_adquisicion ?></td>
                           <td><?= $maquinaria->tipo_maquinaria ?></td>
                           <?php
-                          if ($maquinaria->estado == "ACTIVA") {
+                          if ($maquinaria->estado_maquinaria == "ACTIVA") {
                             ?>
-                              <td class="table-success"><?= $maquinaria->estado ?></td>
+                              <td class="table-success"><?= $maquinaria->estado_maquinaria ?></td>
                             <?php
-                          } elseif ($maquinaria->estado == "INACTIVA") {
+                          } elseif ($maquinaria->estado_maquinaria == "INACTIVA") {
                             ?>
-                              <td class="table-danger"><?= $maquinaria->estado ?></td>
+                              <td class="table-danger"><?= $maquinaria->estado_maquinaria ?></td>
                             <?php
-                          }elseif ($maquinaria->estado == "SUSPENDIDA") {
+                          }elseif ($maquinaria->estado_maquinaria == "SUSPENDIDA") {
                             ?>
-                              <td class="table-light"><?= $maquinaria->estado ?></td>
+                              <td class="table-light"><?= $maquinaria->estado_maquinaria ?></td>
                             <?php
-                          }elseif ($maquinaria->estado == "MANTENIMIENTO") {
+                          }elseif ($maquinaria->estado_maquinaria == "MANTENIMIENTO") {
                             ?>
-                              <td class="table-primary"><?= $maquinaria->estado ?></td>
+                              <td class="table-primary"><?= $maquinaria->estado_maquinaria ?></td>
                             <?php
                           }
                           ?>

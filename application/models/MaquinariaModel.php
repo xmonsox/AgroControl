@@ -35,7 +35,7 @@ class MaquinariaModel extends CI_Model
             'fecha_adquisicion' =>$fecha_adquisicion,
             'costo_adquisicion' => $costo_adquisicion,
             'tipo_maquinaria' => $tipo,
-            'estado' => $estado,
+            'estado_maquinaria' => $estado,
         ];
         return $this->db->insert('maquinaria', $data);
     }
@@ -82,7 +82,7 @@ class MaquinariaModel extends CI_Model
             'fecha_adquisicion' => $fecha_adquisicion,
             'costo_adquisicion' => $costo_adquisicion,
             'tipo_maquinaria' => $tipo_maquinaria,
-            'estado' => $estado,
+            'estado_maquinaria' => $estado,
         );
         $this->db->where('id_maquinaria', $id_maquinaria);
         $this->db->update('maquinaria', $data);

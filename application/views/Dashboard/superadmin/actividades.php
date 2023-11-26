@@ -77,17 +77,17 @@
                       <?php foreach ($Actividades as $actividad): ?>
                         <tr>
                           <td><?= $actividad->id_actividad ?></td>
-                          <td><?= $actividad->nombre ?></td>
+                          <td><?= $actividad->nombre_actividad ?></td>
                           <td><?= $actividad->descripcion ?></td>
                           <td><?= $actividad->ubicacion ?></td>
                           <?php
-                            if ($actividad->estado == "DISPONIBLE") {
+                            if ($actividad->estado_actividad == "DISPONIBLE") {
                               ?>
-                              <td class="table-success"><?= $actividad->estado ?></td>
+                              <td class="table-success"><?= $actividad->estado_actividad ?></td>
                               <?php
-                            } elseif ($actividad->estado == "NO DISPONIBLE") {
+                            } elseif ($actividad->estado_actividad == "NO DISPONIBLE") {
                               ?>
-                              <td class="table-danger"><?= $actividad->estado ?></td>
+                              <td class="table-danger"><?= $actividad->estado_actividad ?></td>
                               <?php
                             }
                           ?>

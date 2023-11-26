@@ -21,7 +21,7 @@ class RepuestosModel extends CI_Model{
             'precio_compra' => $precio_compra,
             'descripcion' => $descripcion,
             'id_proveedor' => $id_proveedor,
-            'estado' => $estado,
+            'estado_repuesto' => $estado,
         ];
         return $this->db->insert('repuestos', $data);
     }
@@ -55,7 +55,7 @@ class RepuestosModel extends CI_Model{
             'precio_compra' => $precio_compra,
             'descripcion' => $descripcion,
             'id_proveedor' => $id_proveedor,
-            'estado' => $estado,
+            'estado_repuesto' => $estado,
         ];
 
         $this->db->where('id_repuesto', $id_repuesto);

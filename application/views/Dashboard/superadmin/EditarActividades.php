@@ -34,7 +34,7 @@
                 <input type="hidden" name="id_actividad" value="<?=$actividad->id_actividad?>">
                 <div class="p-3">
                   <h5><i class="fa-solid fa-list"></i> NOMBRE</h5>
-                  <input class="form-control" type="text" name="nombre" value="<?= $actividad->nombre; ?>"
+                  <input class="form-control" type="text" name="nombre" value="<?= $actividad->nombre_actividad; ?>"
                     required>
                 </div>
 
@@ -54,10 +54,10 @@
                     <h5>ESTADO</h5>
                     <select class="form-control" name="estado">
                       <?php if ($actividad): ?>
-                        <?php if ($actividad->estado == "DISPONIBLE"): ?>
+                        <?php if ($actividad->estado_actividad == "DISPONIBLE"): ?>
                           <option value="DISPONIBLE">DISPONIBLE</option>
                           <option value="NO DISPONIBLE">NO DISPONIBLE</option>
-                        <?php elseif ($actividad->estado == "NO DISPONIBLE"): ?>
+                        <?php elseif ($actividad->estado_actividad == "NO DISPONIBLE"): ?>
                           <option value="NO DISPONIBLE">NO DISPONIBLE</option>
                           <option value="DISPONIBLE">DISPONIBLE</option>
                         <?php endif; ?>

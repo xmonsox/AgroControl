@@ -28,10 +28,10 @@ class ActividadesModel extends CI_Model
     public function insertarActividades($id_actividad, $nombre, $descripcion, $ubicacion, $estado, $prioridad){
         $data = [
             'id_actividad' => $id_actividad,
-            'nombre' => $nombre,
+            'nombre_actividad' => $nombre,
             'descripcion' => $descripcion,
             'ubicacion' =>$ubicacion,
-            'estado' => $estado,
+            'estado_actividad' => $estado,
             'prioridad' => $prioridad,
         ];
         return $this->db->insert('actividades', $data);
@@ -55,10 +55,10 @@ class ActividadesModel extends CI_Model
     {
         $data = array(
             'id_actividad' => $id,
-            'nombre' => $nombre,
+            'nombre_actividad' => $nombre,
             'descripcion' => $descripcion,
             'ubicacion' => $ubicacion,
-            'estado' => $estado,
+            'estado_actividad' => $estado,
             'prioridad' => $prioridad,
         );
         $this->db->where('id_actividad', $id);

@@ -218,7 +218,7 @@
             </div>
             <div class="row mb-3">
               <div class="col-md-6">
-                <select class="form-control" name="rol" id="">
+                <select class="form-select" name="rol" id="">
                   <option value="SUPERADMIN">SUPERADMIN</option>
                   <option value="ADMIN">ADMIN</option>
                   <option value="AGRICULTORES">AGRICULTORES</option>
@@ -230,7 +230,7 @@
                 </select>
               </div>
               <div class="col-md-6">
-                <select class="form-control" name="estado" id="">
+                <select class="form-select" name="estado" id="">
                   <option value="ACTIVO">ACTIVO</option>
                   <option value="INACTIVO">INACTIVO</option>
                 </select>
@@ -296,3 +296,8 @@
 </body>
 
 </html>
+
+
+
+
+

@@ -105,23 +105,23 @@
                     <h5>ESTADO</h5>
                     <select class="form-control" name="estado">
                       <?php if ($maquinaria): ?>
-                        <?php if ($maquinaria->estado == "ACTIVA"): ?>
-                            <option value="<?=$maquinaria->estado?>"><?=$maquinaria->estado?></option>
+                        <?php if ($maquinaria->estado_maquinaria == "ACTIVA"): ?>
+                            <option value="<?=$maquinaria->estado_maquinaria?>"><?=$maquinaria->estado_maquinaria?></option>
                             <option value="INACTIVA">INACTIVA</option>
                             <option value="SUSPENDIDA">SUSPENDIDA</option>
                             <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                        <?php elseif ($maquinaria->estado == "INACTIVA"): ?>
-                            <option value="<?=$maquinaria->estado?>"><?=$maquinaria->estado?></option>
+                        <?php elseif ($maquinaria->estado_maquinaria == "INACTIVA"): ?>
+                            <option value="<?=$maquinaria->estado_maquinaria?>"><?=$maquinaria->estado_maquinaria?></option>
                             <option value="ACTIVA">ACTIVA</option>
                             <option value="SUSPENDIDA">SUSPENDIDA</option>
                             <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                        <?php elseif ($maquinaria->estado == "SUSPENDIDA"): ?>
-                            <option value="<?=$maquinaria->estado?>"><?=$maquinaria->estado?></option>
+                        <?php elseif ($maquinaria->estado_maquinaria == "SUSPENDIDA"): ?>
+                            <option value="<?=$maquinaria->estado_maquinaria?>"><?=$maquinaria->estado_maquinaria?></option>
                             <option value="ACTIVA">ACTIVA</option>
                             <option value="INACTIVA">INACTIVA</option>
                             <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                        <?php elseif ($maquinaria->estado == "MANTENIMIENTO"): ?>
-                            <option value="<?=$maquinaria->estado?>"><?=$maquinaria->estado?></option>
+                        <?php elseif ($maquinaria->estado_maquinaria == "MANTENIMIENTO"): ?>
+                            <option value="<?=$maquinaria->estado_maquinaria?>"><?=$maquinaria->estado_maquinaria?></option>
                             <option value="ACTIVA">ACTIVA</option>
                             <option value="INACTIVA">INACTIVA</option>
                             <option value="SUSPENDIDA">SUSPENDIDA</option>

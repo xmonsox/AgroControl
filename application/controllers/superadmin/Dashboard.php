@@ -11,6 +11,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model('RepuestosModel');
 		$this->load->model('ActividadesModel');
 		$this->load->model('MaquinariaModel');
+		$this->load->model('AsignacionesModel');
 
 
         $validacion = $this->session->has_userdata("session_actual");
@@ -89,7 +90,11 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function Asignaciones(){
-		$data['Actividades'] = $this->ActividadesModel->findAll();
+		$data['asignaciones'] = $this->AsignacionesModel->findAll();
+		$data['actividades'] = $this->AsignacionesModel->getIdNameActividades();
+		$data['usuarios'] = $this->AsignacionesModel->getIdNameUsuarios();
+		$data['maquinarias'] = $this->AsignacionesModel->getIdNameMaquinarias();
+		
 
 		$data['session'] = $this->session->userdata("session_actual");
 		$this->load->view('Dashboard/superadmin/asignaciones', $data);

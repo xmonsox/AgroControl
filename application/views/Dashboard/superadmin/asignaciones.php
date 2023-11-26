@@ -8,16 +8,16 @@
     $this->load->view('dashboard/superadmin/layoutsSuperAdmin/sidebar',$dataSidebar);
   ?>
     <?php
-      if (isset($usuarioinsertado)) {
+      if (isset($InsertAsignacion)) {
         ?>
           <script>
             Swal.fire({
               title: "REGISTRO EXITOSO",
-              text: "El usuario se ha registrado correctamente",
+              text: "La asignacion se ha registrado correctamente",
               icon: "success"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Asignaciones')?>">
         <?php
       }elseif(isset($datorepetido)){
         ?>
@@ -28,7 +28,7 @@
               icon: "error"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Asignaciones')?>">
         <?php
       }elseif(isset($camposvacios)){
         ?>
@@ -39,18 +39,29 @@
               icon: "warning"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Asignaciones')?>">
         <?php
-      }elseif(isset($usuarioactualizado)){
+      }elseif(isset($asignacionActualizada)){
         ?>
           <script>
             Swal.fire({
               title: "ACTUALIZACION EXITOSA",
-              text: "El usuario fue actualizado exitosamente",
+              text: "La asignacion fue modificada exitosamente",
               icon: "success"
             });
           </script>
-          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Usuarios')?>">
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Asignaciones')?>">
+        <?php
+      }elseif(isset($fechaIncorrect)){
+        ?>
+          <script>
+            Swal.fire({
+              title: "ERROR DE FECHAS",
+              text: "La fecha de inicio debe ser mayor a la fecha final",
+              icon: "warning"
+            });
+          </script>
+          <meta http-equiv="refresh" content="3;url=<?= base_url('superadmin/Dashboard/Asignaciones')?>">
         <?php
       }
     ?>
@@ -65,59 +76,68 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-
               <div class="card">
-
                 <div class="card-body">
                   <div class="d-flex justify-content-start py-2">
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-circle-check"></i> REGISTRAR ASIGNACION</button> -->
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="fa-solid fa-circle-check"></i> REGISTRAR ASIGNACION</button>
                   </div>
                   <table id="example1" class="table table-bordered table-hover">
                     <thead>
                       <tr class="bg-dark">
                         <th>ID</th>
-                        <th>CEDULA</th>
-                        <th>NOMBRES</th>
-                        <th>APELLIDOS</th>
-                        <th>TELEFONO</th>
-                        <th>DIRECCION</th>
-                        <th>ROL</th>
-                        <th>EMAIL</th>
+                        <th>ACTIVIDAD</th>
+                        <th>USUARIO</th>
+                        <th>MAQUINARIA</th>
                         <th>ESTADO</th>
-                        <th>EDITAR</th>
+                        <th>FECHA INICIO</th>
+                        <th>FECHA FIN</th>
+                        <th>MODIFICAR</th>
                         <th>ELIMINAR</th>
                       </tr>
                     </thead>
-
                     <tbody>
-                      <!-- <?php foreach ($Usuarios as $usuario): ?>
+                      <?php foreach ($asignaciones as $asignacion): ?>
                         <tr>
-                          <td><?= $usuario->id_usuario ?></td>
-                          <td><?= $usuario->documento ?></td>
-                          <td><?= $usuario->nombre ?></td>
-                          <td><?= $usuario->apellido ?></td>
-                          <td><?= $usuario->telefono ?></td>
-                          <td><?= $usuario->direccion ?></td>
-                          <td><?= $usuario->rol ?></td>
-                          <td><?= $usuario->email ?></td>
+                          <td><?= $asignacion->id_asignacion ?></td>
+                          <td><?= $asignacion->id_actividad ?></td>
+                          <td><?= $asignacion->id_usuario ?></td>
+                          <td><?= $asignacion->id_maquinaria ?></td>
                           <?php
-                          if ($usuario->estado == "ACTIVO") {
+                          if ($asignacion->estado_asignacion == "Completada") {
                             ?>
-                              <td class="table-success"><?= $usuario->estado ?></td>
+                              <td class="table-success"><?= $asignacion->estado_asignacion ?></td>
                             <?php
-                          } elseif ($usuario->estado == "INACTIVO") {
+                          } elseif ($asignacion->estado_asignacion == "Cancelada") {
                             ?>
-                              <td class="table-danger"><?= $usuario->estado ?></td>
+                              <td class="table-danger"><?= $asignacion->estado_asignacion ?></td>
+                            <?php
+                          }elseif ($asignacion->estado_asignacion == "En progreso") {
+                            ?>
+                              <td class="table-secondary"><?= $asignacion->estado_asignacion ?></td>
+                            <?php
+                          }elseif ($asignacion->estado_asignacion == "Suspendida") {
+                            ?>
+                              <td class="table-secondary"><?= $asignacion->estado_asignacion ?></td>
+                            <?php
+                          }elseif ($asignacion->estado_asignacion == "Atrasada") {
+                            ?>
+                              <td class="table-warning"><?= $asignacion->estado_asignacion ?></td>
+                            <?php
+                          }elseif ($asignacion->estado_asignacion == "Pendiente") {
+                            ?>
+                              <td class="table-warning"><?= $asignacion->estado_asignacion ?></td>
                             <?php
                           }
                           ?>
+                          <td><?= $asignacion->fecha_inicio ?></td>
+                          <td><?= $asignacion->fecha_finalizacion ?></td>
                           <td class="text-center">
-                            <a class="btn btn-outline-primary" title="EDITAR" href="<?=base_url('superadmin/usuarios/UsersController/EditarUsuario/'.$usuario->id_usuario)?>"><i class="fa-solid fa-user-pen"></i></a>
+                            <a class="btn btn-outline-primary" title="EDITAR" href="<?=base_url('superadmin/asignaciones/AsignacionesController/viewForUpdate/'.$asignacion->id_asignacion)?>"><i class="fa-solid fa-user-pen"></i></a>
                           </td>
                           <td class="text-center">
                             <button class="btn btn-outline-danger" title="ELIMINAR"  
                               onclick="Swal.fire({
-                                      title: '¿Deseas eliminar este usuario?',
+                                      title: '¿Deseas eliminar esta asignacion?',
                                       text: 'No podras revertir este cambio!',
                                       icon: 'warning',
                                       confirmButtonColor: '#3085d6',
@@ -126,7 +146,7 @@
                                       denyButtonText: 'NO ELIMINAR',
                                     }).then((result) => {                                                                                    
                                       if (result.isConfirmed) {
-                                        window.location.href='<?=base_url('superadmin/usuarios/UsersController/deleteUsuario/'.$usuario->id_usuario)?>';
+                                        window.location.href='<?=base_url('superadmin/asignaciones/AsignacionesController/deleteAsignacion/'.$asignacion->id_asignacion)?>';
                                         Swal.fire('Eliminado Correctamente!', '', 'success');
                                       } else if (result.isDenied) {
                                         Swal.fire('No Se Realizaron Cambios', '', 'info');
@@ -135,7 +155,7 @@
                             </button> 
                           </td>
                         </tr>
-                      <?php endforeach; ?> -->
+                      <?php endforeach; ?> 
                     </tbody>
                   </table>
                 </div>
@@ -151,93 +171,79 @@
   ?>
 
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  <div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-user-plus"></i> REGISTRAR USUARIOS</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="fa-solid fa-user-plus"></i> REGISTRAR ASIGNACIONES</h1>
         </div>
-        <form action="<?= base_url('superadmin/usuarios/UsersController/CrearUsuario') ?>" method="POST">
+        <form action="<?= base_url('superadmin/asignaciones/AsignacionesController/insertAsignacion') ?>" method="POST">
           <div class="modal-body">
-            <div class="input-group mb-3">
-              <input type="number" class="form-control" name="documento" required placeholder="NUMERO DE DOCUMENTO">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <i class="fa-solid fa-address-card"></i>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="nombres" required placeholder="NOMBRES">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="apellidos" required placeholder="APELLIDOS">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-user"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="number" class="form-control" name="telefono" required placeholder="TELEFONO">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-phone"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="direccion" required placeholder="DIRECCION">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-location"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="email" class="form-control" name="email" required placeholder="EMAIL">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" name="password" required placeholder="CONTRASEÑA">
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row mb-3">
+            <div class="row">
+
               <div class="col-md-6">
-                <select class="form-control" name="rol" id="">
-                  <option value="SUPERADMIN">SUPERADMIN</option>
-                  <option value="ADMIN">ADMIN</option>
-                  <option value="AGRICULTORES">AGRICULTORES</option>
-                  <option value="JARDINEROS">JARDINEROS</option>
-                  <option value="OPERADOR MAQUINARIA">OPERADOR MAQUINARIA</option>
-                  <option value="GANADEROS">GANADEROS</option>
-                  <option value="ASEADOR">ASEADOR</option>
-                  <option value="PERSONAL MANTENIMIENTO">PERSONAL MANTENIMIENTO</option>
+                <select class="form-select" id="id_actividad" name="id_actividad">
+                  <option value="" disabled selected style="color: gray;">ACTIVIDAD</option>
+                  <?php foreach ($actividades as $actividad): ?>
+                    <option value="<?=$actividad->id_actividad?>"><?= $actividad->nombre_actividad ?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
+
               <div class="col-md-6">
-                <select class="form-control" name="estado" id="">
-                  <option value="ACTIVO">ACTIVO</option>
-                  <option value="INACTIVO">INACTIVO</option>
+                <select class="form-select" name="id_usuario">
+                  <option value="" disabled selected style="color: gray;">USUARIO</option>
+                  <?php foreach ($usuarios as $usuario): ?>
+                    <option value="<?=$usuario->id_usuario?>"><?= $usuario->nombre?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
+
             </div>
-          </div>
-          <div class="modal-footer">
+            <div class="row mt-3">
+
+              <div class="col-md-6">
+                <select class="form-select" name="id_maquinaria">
+                  <option value="" disabled selected style="color: gray;">MAQUINARIAS</option>
+                  <?php foreach ($maquinarias as $maquinaria): ?>
+                    <option value="<?=$maquinaria->id_maquinaria?>"><?= $maquinaria->nombre?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <select class="form-select" name="estado_asignacion">
+                  <option value="" disabled selected style="color: gray;">ESTADO</option>
+                  <option value="En progreso">EN PROGRESO</option>
+                  <option value="Completada">COMPLETADA</option>
+                  <option value="Pendiente">PENDIENTE</option>
+                  <option value="Suspendida">SUSPENDIDA</option>
+                  <option value="Cancelada">CANCELADA</option>
+                  <option value="Atrasada">ATRASADA</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="row mt-3">
+
+              <div class="col-md-6 input-group mb-3">
+                <input type="text" class="form-control" name="fecha_inicio" required readonly style="color: gray;" value="<?= date('d-m-Y') ?>">
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fa-solid fa-calendar-days"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 input-group mb-3">
+                <input type="date" class="form-control"  name="fecha_finalizacion" required>
+              </div>
+
+            </div>  
+                 
+          <div class="modal-footer justify-content-center">
             <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">CANCELAR</button>
             <button type="submit" class="btn btn-outline-success">REGISTRAR</button>
           </div>
@@ -246,7 +252,7 @@
     </div>
   </div>
 
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script src="http://localhost/AgroControl/assets/plugins/jquery/jquery.min.js"></script>
   <script
     src="http://localhost/AgroControl/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

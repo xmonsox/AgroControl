@@ -95,16 +95,16 @@
                                 <div class="col-md-6">
                                     <select class="form-control" name="estado">
                                         <?php if ($repuesto): ?>
-                                            <?php if ($repuesto->estado == "DISPONIBLE"): ?>
-                                                <option value="<?=$repuesto->estado?>"><?=$repuesto->estado?></option>
+                                            <?php if ($repuesto->estado_repuesto == "DISPONIBLE"): ?>
+                                                <option value="<?=$repuesto->estado_repuesto?>"><?=$repuesto->estado_repuesto?></option>
                                                 <option value="NO DISPONIBLE">NO DISPONIBLE</option>
                                                 <option value="PEDIDO">PEDIDO</option>
-                                            <?php elseif ($repuesto->estado == "NO DISPONIBLE"): ?>
-                                                <option value="<?=$repuesto->estado?>"><?=$repuesto->estado?></option>
+                                            <?php elseif ($repuesto->estado_repuesto == "NO DISPONIBLE"): ?>
+                                                <option value="<?=$repuesto->estado_repuesto?>"><?=$repuesto->estado_repuesto?></option>
                                                 <option value="DISPONIBLE">DISPONIBLE</option>
                                                 <option value="PEDIDO">PEDIDO</option>
-                                            <?php elseif ($repuesto->estado == "PEDIDO"): ?>
-                                                <option value="<?=$repuesto->estado?>"><?=$repuesto->estado?></option>
+                                            <?php elseif ($repuesto->estado_repuesto == "PEDIDO"): ?>
+                                                <option value="<?=$repuesto->estado_repuesto?>"><?=$repuesto->estado_repuesto?></option>
                                                 <option value="DISPONIBLE">DISPONIBLE</option>
                                                 <option value="NO DISPONIBLE">NO DISPONIBLE</option>
                                             <?php endif; ?>
